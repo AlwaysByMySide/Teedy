@@ -1,38 +1,55 @@
 <?xml version="1.0"?>
 
-<ruleset name="Custom Rules"
-    xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+<ruleset name="Software Engineering Rules"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
 
     <description>
-        My custom rules
+        Rules for lab 7
     </description>
 
 
     <!-- Your rules will come here -->
-    <!-- 
-    Lines of Code (LoC)：
-    PMD的ExcessiveMethodLength和ExcessiveClassLength规则可以帮助识别具有过长代码行数的方法或类。
+    <!-- Code Size Rules -->
+    <rule ref="category/java/design.xml/ExcessiveClassLength">
+        <properties>
+            <property name="minimum" value="1000"/>
+        </properties>
+    </rule>
 
-    Cyclomatic Complexity (CC)：
-    PMD的CyclomaticComplexity规则用于检测代码中的复杂性。该规则根据代码的分支语句数量来计算圈复杂度，并对超过阈值的代码块产生警告。
+    <!-- Design Rules -->
+    <rule ref="category/java/design.xml/CyclomaticComplexity">
+        <properties>
+            <property name="reportLevel" value="10"/>
+        </properties>
+    </rule>
 
-    Weighted Methods per Class (WMC)：
-    PMD的ExcessiveClassLength规则（通过计算类中的方法数量）和ExcessiveMethodLength规则（通过计算方法的代码行数）可以帮助检测类和方法的复杂性。
+    <!-- Weighted Methods per Class  -->
+    <rule ref="category/java/design.xml/TooManyMethods">
+        <properties>
+            <property name="maxmethods" value="15"/>
+        </properties>
+    </rule>
 
-    Coupling Between Objects (CBO)：
-    PMD的ExcessiveClassLength规则（通过计算类中的依赖关系数量）和ExcessiveImports规则（通过计算导入的类和包的数量）可以帮助检测类之间的耦合度。
+    <!-- Coupling Between Objects   -->
+    <rule ref="category/java/design.xml/CouplingBetweenObjects">
+        <properties>
+            <property name="threshold" value="10"/>
+        </properties>
+    </rule>
 
-    Lack of Cohesion in Methods (LCOM)：
-    PMD的ExcessivePublicCount规则和ExcessivePrivateCount规则可以帮助检测类中公共和私有方法的数量，进而间接反映方法之间的关联性和内聚性。 -->
-
-    <rule ref="category/java/design.xml/ExcessiveMethodLength"/>
-    <rule ref="category/java/design.xml/ExcessiveClassLength"/>
-    <rule ref="category/java/design.xml/CyclomaticComplexity"/>
-    <rule ref="category/java/design.xml/ExcessiveImports"/>
-    <rule ref="category/java/design.xml/ExcessivePublicCount"/>
-    
+    <!-- Lack of Cohesion in Methods   -->
+    <rule ref="category/java/design.xml/GodClass">
+        <description>
+            A God class is a class that knows everything and does everything.
+            Too many responsibilities = lack of cohesion.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="violationSuppressXPath" value="//ClassOrInterfaceDeclaration/.."/>
+        </properties>
+    </rule>
 
 
 </ruleset>

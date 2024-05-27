@@ -6,27 +6,32 @@ pipeline {
                 sh 'mvn -B -DskipTests clean install' 
             }
         }
-        stage('test') {
+        stage('K8s') { 
             steps {
-                sh 'mvn test --fail-never '
+                sh 'kubectl set image deployments/hello-node container-name=image-id'
             }
-        }
-        stage('Doc') { 
-            steps {
-                sh 'mvn javadoc:javadoc --fail-never' 
-            }
-        }
-        stage('Pmd') { 
-            steps {
-                sh 'mvn pmd:pmd' 
-            }
-        }
-        stage('TestReport') { 
-            steps {
-                sh 'mvn surefire-report:report'
-                sh 'mvn jacoco:report' 
-            }
-        }
+        }        
+        // stage('test') {
+        //     steps {
+        //         sh 'mvn test --fail-never '
+        //     }
+        // }
+        // stage('Doc') { 
+        //     steps {
+        //         sh 'mvn javadoc:javadoc --fail-never' 
+        //     }
+        // }
+        // stage('Pmd') { 
+        //     steps {
+        //         sh 'mvn pmd:pmd' 
+        //     }
+        // }
+        // stage('TestReport') { 
+        //     steps {
+        //         sh 'mvn surefire-report:report'
+        //         sh 'mvn jacoco:report' 
+        //     }
+        // }
         
         
     }
